@@ -41,7 +41,7 @@
   - Overfitting: model memorises noise
 - Data are split into _training_, _validation_, and _test_ sets to evaluate the model properly and avoid bias.
 
-### Useful Python Libraries
+### Python Libraries
 
 #### NumPy (Numeric Computing in Python)
 
@@ -56,6 +56,8 @@
     - an `axis=#` can be provided for matrices so the aggregation happens only on that dimension
 
 ```python
+import NumPy as np
+
 heights_list = np.array([166, 175, 179, 182, 185])
 zeros = np.zeros(5) # creates an array of length 5 of 0s
 ones = np.ones(10) # creates an array of length 10 of 1s
@@ -89,6 +91,68 @@ e_double = e * 2 # -> [0, 0.5, 1, 1.5, 2]
   - `rng.normal()`
 
 #### Pandas
+
+- Library to work with structured, tabular data.
+- Two core structures: **Series (1D)** and **DataFrame (2D)**.
+  - Both structures feature _indices_ to improve access efficiency.
+- Pandas can import from csv (`pd.read_csv()`), either locally or online.
+- Useful methods:
+  - `df.head()`:
+  - `df.info()`: column types and non-null counts
+  - `df.describeO()`: summary statistics for numeric columns
+  - `df.dtypes()`: data types for each column
+  - `df.columns()`: list of column names
+  - `df.copy()`: returns a copy of the full DataFrame
+  - selection and slicing done through `[]`
+    - `df["column_name"]`: returns the specified column as a Series
+    - `df[["column_name_1", "column_name_1"]]`: returns the specified columns as a DataFrame
+    - `df.loc[]`: selects by label
+    - `df.iloc[]`: selects by position
+  - masking can be done in pandas line in NumPy
+    - in a DataFrame masking will select rows based on the condition(s)
+  - `df.isna().sum()`: returns the number of NaN values per column
+  - `df.dropna()`: drop rows with NaN at any column
+    - can define an axis (`dropna(axis=1)`) to drop whole columns with NaN values
+  - `df["col_name"] = df["col_name"].filna(default_value)`: fill all NaN in the specified column with some specific value
+  - `df.rename()`
+  - `df.drop()`
+  - `df.groupby()`: splits the DataFrame into groups based on a column
+    - `.reset_index()` flattens the result into a regular DataFrame
+  - `df.sort_values(["col_names"], ascending=True/False)`
+  - `df["col_name"].value_counts()`: returns occurrences of unique values
+    - `normalize=True` changes the counts to relative frequencies
+  - `df.to_csv(path)`: stores the DataFrame into csv format
+    - `index=False` to not save the indices
+  - `df.to_json(path)`: stores the DataFrame into json format
+- mathematical operations are applied to columns at once
+- Pandas integrates with matplotlib for plotting data, but does not support the full matplotlib stuff
+
+```python
+import pandas as pd
+
+s = pd.Series([10, 20, 30], index=["a", "b", "c"])
+
+df = pd.DataFrame({
+  "name": ["Alice", "Bob"],
+  "age": [25, 30],
+  "score": [88, 92]
+})
+
+url = ("https://raw.githubusercontent.com/pandas-dev/pandas/main/doc/data/titanic.csv")
+df = pd.read_csv(url)
+
+df["Age"] = df["Age"].filna(df["Age"].mean())
+
+high = df[df["Fare"] > 85]
+
+res = df[(df["Fare"] >= 85) & (df["Age"] < 30)]
+# or
+res = df.query("Fare >= 85 % Age < 30")
+
+df.groupby("Pclass")["Fare"].mean()
+df.groupby("Pclass")["Fare"].agg(["mean", "max", "count"])
+df.groupby(["Pclass", "Sex"])["Fare"].mean().reset_index()
+```
 
 #### Matplotlib
 
