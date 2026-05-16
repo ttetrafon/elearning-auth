@@ -156,6 +156,67 @@ df.groupby(["Pclass", "Sex"])["Fare"].mean().reset_index()
 
 #### Matplotlib
 
+- Data visualisation library
+- **Plots**
+  - `plt.plot(x: list, y: list)`: line plot
+  - `plt.subplots(x, y)`: create an (x,y) matrix of plots
+  - `plt.scatter(x, y, s=#)`: scatter (points) plot
+  - `plt.barplot(categories, values)`
+  - `plt.hist(data, bins=#, rwidth=#)`: histogram
+  - `plt.show`: actually draws the plots on the screen
+- **Figure options**
+  - A _figure_ is the canvas that contains one or more plots.
+  - `figsize=(x, y)`: defines the figure's size
+  - `sharex=True`/`sharey=True`: aligns the plots in the figure on the appropriate axis to facilitate visual comparisons
+- **Plot options**
+  - `ax.set_title()`
+  - `ax.set_xlabel()`
+  - `ax.set_ylabel()`
+  - `label=#`: defines the plotted data label
+  - `ax.legend()`: displays the legend
+  - `ax.annotate()`: creates annotations within a plot
+  - `ax.set_yscale()`: changes the scale of the y axis
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+
+a = [1, 2, 3, 4]
+b = [2, 4, 4, 5]
+
+fig_s, ax_s = plt.subplots(figsize=(4, 2))
+ax.plot(a, b)
+ax.set_title("My Plot")
+
+fig_m, (ax1, ax2, ax3, ax4, ax5, ax6) = plt.subplots(2, 3)
+ax1.plot(a, b)
+# ...
+
+x = np.linspace(0, 5, 200)
+fig_d, ax_d = plt.subplots(figsize(4, 2))
+ax_d.plot(x, x, label="y = x")
+ax_d.plot(x, x**2, label="y = x^2")
+ax_d.set_title("Two Functions")
+ax_d.set_xlabel("x")
+ax_d.set_ylabel("y")
+ax_d.legend()
+
+x = np.linspace(2, 2*np.pi, 200)
+y = np.sin(x)
+imax = np.argmax(y)
+fig, ax = plt.subplots(figsize(4, 2))
+ax.plot(x, y)
+ax.scatter([x[imax], y[imax]])
+ax.annotate(
+  "peak",
+  xy=(x[imax], y[imax]),
+  xytext=(x[imax] + 0.9, y[imax] - 0.3)
+  arrowprops={"arrowstyle": "->"}
+)
+
+plt.show()
+```
+
 #### Seaborn
 
 ## (3) Introduction to Machine Learning
