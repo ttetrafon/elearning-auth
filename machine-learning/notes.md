@@ -1,6 +1,6 @@
 # Notes
 
-## (2) Introduction to Machine Learning
+## (2) Introduction to Machine Learning and Basic Python Libraries
 
 - AL vs ML vs Deep Learning
   - AI: machines perform tasks that look intelligent
@@ -219,4 +219,57 @@ plt.show()
 
 #### Seaborn
 
-## (3) Introduction to Machine Learning
+- Data visualisation library
+  - extends **MatPlotLib**
+  - integrates with **Pandas**
+- Plot options:
+  - `scatterplot`:
+    - `hue=#`: applies colour based on some data variable
+    - `scatter_kws={"s": #}`: visualises the correlation between the axis alongside its uncertainty
+  - `histogram`:
+    - `kde=True`: displays the Kernel Destiny Estimation
+  - `boxplot`: summarises distribution by median and quantiles
+  - `barplot`
+  - `relplot`: creates one plot per subset to showcase relations
+    - `kind=#`: determines the type of the internal plots
+  - `heatmap`: correlation matrix
+
+```python
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+a = [1, 2, 3, 4]
+b = [2, 4, 3, 5]
+sns.lineplot(x=a, y=b)
+
+data = sns.load_dataset("tips")
+# data table: { "total_bill": number, "day": string, "smoker": yes/no, "tip": number }
+sns.scatterplot(data=data, x="total_bill", y="tip")
+
+sns.scatterplot(data=data, x="total_bill", y="tip", hue="smoker", ax=ax)
+ax.set_title("Tip vs total bill (coloured by smoker)")
+
+sns.scatterplot(data=data, x="total_bill", y="tip", scatter_kws={"s": 8})
+
+fig, ax = plt.subplots(figsize=(4, 2))
+sns.histplot(data=data, x="total_bill", kde=True, ax=ax)
+ax.set_title("Distribution of total_bill")
+
+sns.boxplot(data=data, x="day", y="total_bill")
+
+sns.barplot(data=data, x="day", y="tip")
+
+g = sns.relplot(data=data, x="total_bill", y="tip", col="day", hue="smoker", kind="scatter", col_wrap=2, height=1.2, aspect=1.5)
+g.fig.suptitle("Tip vs bill faceted by day", y=1.02)
+
+df_num = data[["total_bill", "tip"]].copy()
+df_num["tip_pct"] = data["tip"] / data["total_bill"]
+corr = df_num.corr(numeric_only=True)
+fig, ax = plt.subplots (figsize=(2, 2))
+sns.heatmap(corr, annot=True, ax=ax)
+ax.set_title("Correlation heatmap")
+
+plt.show()
+```
+
+## (3) Supervised Learning
