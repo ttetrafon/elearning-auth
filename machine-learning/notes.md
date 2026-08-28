@@ -99,7 +99,7 @@ e_double = e * 2 # -> [0, 0.5, 1, 1.5, 2]
 - Useful methods:
   - `df.head()`:
   - `df.info()`: column types and non-null counts
-  - `df.describeO()`: summary statistics for numeric columns
+  - `df.describe()`: summary statistics for numeric columns
   - `df.dtypes()`: data types for each column
   - `df.columns()`: list of column names
   - `df.copy()`: returns a copy of the full DataFrame
@@ -113,7 +113,7 @@ e_double = e * 2 # -> [0, 0.5, 1, 1.5, 2]
   - `df.isna().sum()`: returns the number of NaN values per column
   - `df.dropna()`: drop rows with NaN at any column
     - can define an axis (`dropna(axis=1)`) to drop whole columns with NaN values
-  - `df["col_name"] = df["col_name"].filna(default_value)`: fill all NaN in the specified column with some specific value
+  - `df["col_name"] = df["col_name"].fillna(default_value)`: fill all NaN in the specified column with some specific value
   - `df.rename()`
   - `df.drop()`
   - `df.groupby()`: splits the DataFrame into groups based on a column
@@ -273,3 +273,18 @@ plt.show()
 ```
 
 ## (3) Supervised Learning
+
+- The model _learns_ from examples.
+  - Inputs paired with correct answers; the model creates the patterns.
+  - Once trained, the model predicts the answer for new, unseen inputs.
+  - The more labelled examples it is given, the better it generalises.
+- All supervised problems require a mapping between some input `X` and some output `Y`.
+- The type of mapping determines the type of learning.
+  - **Classification**: Target is a category.
+  - **Regression**: Target is a continuous number.
+- Performance can be measured only if we split the data into training (80%) and test (20%) sets.
+  - Evaluation is done on comparing the predictions the model makes on the test dataset against the actual values provided by that dataset.
+- The input data need to be transformed and adapted so the model can work on them.
+  - Incomplete data must either be purged or filled in.
+  - Numbers should be standardised.
+  - Categories must be converted to numbers.
