@@ -283,7 +283,8 @@ plt.show()
   - **Classification**: Target is a category.
   - **Regression**: Target is a continuous number.
 - Performance can be measured only if we split the data into training (80%) and test (20%) sets.
-  - Evaluation is done on comparing the predictions the model makes on the test dataset against the actual values provided by that dataset.
+  - Split of the data uses stratification so that both sets are balanced.
+  - Evaluation is finally done on comparing the predictions the model makes on the test dataset against the actual values provided by that dataset.
 - The input data need to be transformed and adapted so the model can work on them.
   - Incomplete data must either be purged or filled in.
   - Numbers should be standardised.
