@@ -287,5 +287,8 @@ plt.show()
   - Evaluation is finally done on comparing the predictions the model makes on the test dataset against the actual values provided by that dataset.
 - The input data need to be transformed and adapted so the model can work on them.
   - Incomplete data must either be purged or filled in.
+    - Imputation is the act of adding missing values with a reasonable estimate, based on the training set.
+      - Numeric missing values can be filled with the median.
+      - Categorical missing values can be filled with the most frequent category.
   - Numbers should be standardised.
   - Categories must be converted to numbers.

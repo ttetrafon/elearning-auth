@@ -3,7 +3,11 @@ from typing import Any, Tuple, cast
 import numpy as np
 import pandas as pd
 
+from sklearn.compose import ColumnTransformer
+from sklearn.impute import SimpleImputer
 from sklearn.model_selection import train_test_split  # type: ignore
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 # (1) data creation
 rng = np.random.default_rng(42)
@@ -80,6 +84,30 @@ print("Positive rate-train:", y_train.mean().__round__(3))
 print("Positive rate-test:", y_test.mean().__round__(3))
 
 # (3) preprocessing
+num_cols: list[str] = [label_age, label_income]
+cat_cols: list[str] = [label_city, label_job]
+
+numeric_pipe = Pipeline([
+    ("imputer", SimpleImputer(strategy="median")),
+    ("scaler", StandardScaler()),
+])
+
+categorical_pipe = Pipeline([
+    ("imputer", SimpleImputer(strategy="most_frequent")),
+    ("onehot", OneHotEncoder(handle_unknown="ignore")),
+])
+
+preprocess = ColumnTransformer(
+    transformers=[
+        ("num", numeric_pipe, num_cols),
+        ("cat", categorical_pipe, cat_cols),
+    ],
+    remainder="drop"
+)
+
+print("Preprocessor defined.")
+print("Numeric columns:", num_cols)
+print("Categorical columns:", cat_cols)
 
 # (4) pipeline
 
